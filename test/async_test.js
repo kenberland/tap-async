@@ -4,7 +4,7 @@ var fs = require('fs');
 var tap = require('tap');
 
 function done (errors, window) {
-  var AsyncTest = require('./async-test.js');
+  var AsyncTest = require('../async-test.js');
   var response = { "response":"coolio" };
   var server = 'http://foobar.com';
   var path = '/baz';
@@ -15,16 +15,17 @@ function done (errors, window) {
   asyncTest = new AsyncTest()
   var document = global.document = window.document;
 
-  tap.test('async add tag ', function (childTest) {
-    asyncTest.get(server + path);
-    var elem = document.getElementById('status');
-    tap.equal(document.getElementById('status').innerHTML,
-	      'success',
-	      'got a response');
-  });
+  tap.test('get', function() {
+    return asyncTest.get(server + path).then(function(result) {
+      tap.equal(document.getElementById('response').innerHTML,
+		response.response,
+		'got a response');
+      tap.end();
+    });
+  }).catch(tap.threw);
 }
 
-var markup = '<html><body><div id="status">pending</div><div id="results"></div></body></html>';
+var markup = '<html><body><div id="response">pending</div></body></html>';
 var virtualConsole = jsdom.createVirtualConsole().sendTo(console);
 
 require('jsdom').env({
