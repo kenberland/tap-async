@@ -1,0 +1,17 @@
+{
+  "name": "tap-test",
+  "version": "1.0.0",
+  "description": "foo",
+  "main": "index.js",
+  "devDependencies": {
+    "jsdom": "^9.10.0",
+    "jquery": "^3.1.0",
+    "nock": "^9.0.3",
+    "require-dir": "^0.3.0",
+    "superagent": "^3.4.1",
+    "tap": "^10.0.2"
+  },
+  "scripts": {
+    "test": "tap --cov test/*.js"
+  }
+}
